@@ -6,8 +6,17 @@
     "homepage": "https://github.com/davyin-co/dyniva_elastic_search",
     "require": {
         "drupal/core": "^8.6 || ^9",
+        "cweagans/composer-patches": "^1.7",
         "drupal/search_api": "^1.10",
         "drupal/search_api_autocomplete": "^1.0",
         "drupal/elasticsearch_connector": "^7.0@alpha"
+    },
+    "extra": {
+        "enabling-patch": "true",
+        "patches": {
+            "drupal/search_api": {
+                "fix excerpt empty bug": "https://raw.githubusercontent.com/davyin-co/dyniva/1.1.x/patches/search_api_fix_chinese_excerpt.patch"
+            }
+        }
     }
 }
