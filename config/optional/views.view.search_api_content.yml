@@ -1,4 +1,3 @@
-uuid: 00c6241f-f990-4d27-b5a6-44996fba5f5b
 langcode: en
 status: true
 dependencies:
@@ -66,36 +65,14 @@ display:
             offset_label: Offset
           quantity: 9
       style:
-        type: table
+        type: html_list
         options:
           grouping: {  }
           row_class: ''
           default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            title: title
-            body: body
-          info:
-            title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            body:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
+          type: ul
+          wrapper_class: search-result-list
+          class: ''
       row:
         type: fields
       fields:
