@@ -328,7 +328,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: search1
+      path: search
       exposed_block: true
     cache_metadata:
       max-age: -1
