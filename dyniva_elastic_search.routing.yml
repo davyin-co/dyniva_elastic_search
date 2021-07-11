@@ -1,5 +1,5 @@
 dyniva_elastic_search.settings:
-  path: '/admin/config/services/dyniva-elastic'
+  path: '/admin/config/search/dyniva-elastic'
   defaults:
     _title: 'Dyniva elastic search'
     _form: '\Drupal\dyniva_elastic_search\Form\SettingsForm'

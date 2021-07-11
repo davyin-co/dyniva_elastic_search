@@ -1,11 +1,10 @@
-<?php 
-
+<?php
 
 use Drupal\Core\Site\Settings;
 
 /**
  * Implements hook_elasticsearch_connector_load_library_options_alter().
- * 
+ *
  * @param array $options
  * @param \Drupal\elasticsearch_connector\Entity\Cluster $cluster
  */

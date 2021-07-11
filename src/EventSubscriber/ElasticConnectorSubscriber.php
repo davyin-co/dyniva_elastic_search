@@ -1,9 +1,7 @@
 <?php
-
 namespace Drupal\dyniva_elastic_search\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Drupal\dyniva_elastic_search\SearchHelper;
 
 /**
  * Custom exception subscriber.
@@ -17,7 +15,7 @@ class ElasticConnectorSubscriber implements EventSubscriberInterface {
    *   The event to process.
    */
   public function onPrepareMapping(\Drupal\elasticsearch_connector\Event\PrepareMappingEvent $event) {
-    if($event->getMappingType() == 'text') {
+    if ($event->getMappingType() == 'text') {
       $config = \Drupal::config('dyniva_elastic_search.settings');
       $index_analyzer = $config->get('text_index_analyzer') ?: 'ik_max_word';
       $search_analyzer = $config->get('text_search_analyzer') ?: 'ik_smart';
@@ -29,6 +27,7 @@ class ElasticConnectorSubscriber implements EventSubscriberInterface {
       $event->setMappingConfig($mappingConfig);
     }
   }
+
   /**
    * Handles errors for this subscriber.
    *
@@ -36,13 +35,6 @@ class ElasticConnectorSubscriber implements EventSubscriberInterface {
    *   The event to process.
    */
   public function onPrepareQuery(\Drupal\elasticsearch_connector\Event\PrepareSearchQueryEvent $event) {
-    $search_query = $event->getElasticSearchQuery();
-    if(!empty($search_query['query_search_string']['query_string']['query'])) {
-      $search_string = $search_query['query_search_string']['query_string']['query'];
-      $search_string = trim($search_string);
-      $search_string = trim($search_string,'~');
-      SearchHelper::addQueryLog($search_string, REQUEST_TIME);
-    }
   }
 
   /**
@@ -51,13 +43,11 @@ class ElasticConnectorSubscriber implements EventSubscriberInterface {
    * @param \Drupal\elasticsearch_connector\Event\BuildSearchParamsEvent $event
    *   The event to process.
    */
-  public function onBuildQuery(\Drupal\elasticsearch_connector\Event\BuildSearchParamsEvent $event)
-  {
+  public function onBuildQuery(\Drupal\elasticsearch_connector\Event\BuildSearchParamsEvent $event) {
     $params = $event->getElasticSearchParams();
-
-
-    $minimum_should_match = \Drupal::config('dyniva_elastic_search.settings')->get('minimum_should_match');
-    if(!empty($minimum_should_match)) {
+    $minimum_should_match = \Drupal::config('dyniva_elastic_search.settings')
+      ->get('minimum_should_match');
+    if (!empty($minimum_should_match)) {
       $params['body']['query']['bool']['minimum_should_match'] = $minimum_should_match;
     }
     // if ($params['type'] == 'escontent') {
@@ -80,6 +70,7 @@ class ElasticConnectorSubscriber implements EventSubscriberInterface {
     //   $event->setElasticSearchParams($params);
     // }
   }
+
   /**
    * {@inheritdoc}
    */
@@ -90,5 +81,4 @@ class ElasticConnectorSubscriber implements EventSubscriberInterface {
     $events[\Drupal\elasticsearch_connector\Event\BuildSearchParamsEvent::BUILD_QUERY] = 'onBuildQuery';
     return $events;
   }
-
 }
